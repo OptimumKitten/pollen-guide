@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Universal Pollen Guide - Multilingual Edition</title>
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500&family=Inter:wght@300;400;500&family=Noto+Sans+SC:wght@300;400;500&family=Noto+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Language Selector -->
+    <div class="language-selector">
+        <select id="languageSelect" onchange="changeLanguage()">
+            <option value="en">English</option>
+            <option value="ja">日本語</option>
+            <option value="zh">中文</option>
+            <option value="ru">Русский</option>
+        </select>
+    </div>
+
+    <!-- Floating sakura petals -->
+    <div class="sakura-container">
+        <div class="sakura-petal" style="left: 10%; animation-delay: 0s;"></div>
+        <div class="sakura-petal" style="left: 20%; animation-delay: -4s;"></div>
+        <div class="sakura-petal" style="left: 30%; animation-delay: -8s;"></div>
+        <div class="sakura-petal" style="left: 40%; animation-delay: -12s;"></div>
+        <div class="sakura-petal" style="left: 60%; animation-delay: -16s;"></div>
+        <div class="sakura-petal" style="left: 70%; animation-delay: -20s;"></div>
+        <div class="sakura-petal" style="left: 80%; animation-delay: -24s;"></div>
+        <div class="sakura-petal" style="left: 90%; animation-delay: -28s;"></div>
+    </div>
+
+    <div class="container">
+        <div class="cloud-pattern"></div>
+        <h1 data-key="title">Pollen Guide</h1>
+        
+        <div class="time-indicator time-glow" id="timeIndicator"></div>
+        <div style="text-align:center; font-size:11px; color:var(--text-secondary); margin-top:8px;" id="timestamp"></div>
+        
+        <div class="section">
+            <div class="section-title" data-key="environment_conditions">Environment Conditions</div>
+            <div class="input-group">
+                <label for="pollen" data-key="pollen_label">Tree Pollen Count (grains/m³):</label>
+                <input type="number" id="pollen" data-key="pollen_placeholder" placeholder="Current pollen reading">
+            </div>
+            <div class="weather-grid">
+                <div class="input-group">
+                    <label for="temperature" data-key="temperature_label">Temperature (°C):</label>
+                    <input type="number" id="temperature" data-key="temperature_placeholder" placeholder="°C">
+                </div>
+                <div class="input-group">
+                    <label for="wind" data-key="wind_label">Wind Speed (km/h):</label>
+                    <input type="number" id="wind" data-key="wind_placeholder" placeholder="km/h">
+                </div>
+            </div>
+            <div class="input-group">
+                <label for="humidity" data-key="humidity_label">Humidity (%):</label>
+                <input type="number" id="humidity" data-key="humidity_placeholder" placeholder="Humidity %">
+            </div>
+            <div class="input-group">
+                <label for="weather" data-key="weather_label">Current Sky Condition:</label>
+                <select id="weather">
+                    <option value="sunny" data-key="weather_sunny">Sunny & Clear</option>
+                    <option value="partly-cloudy" data-key="weather_partly_cloudy">Partly Cloudy</option>
+                    <option value="cloudy" data-key="weather_cloudy">Cloudy</option>
+                    <option value="overcast" data-key="weather_overcast">Overcast</option>
+                    <option value="raining" data-key="weather_raining">Currently Raining</option>
+                </select>
+            </div>
+        </div>
+        
+        <div class="section">
+            <div class="section-title" data-key="rain_history">Recent Rain History</div>
+            <div class="rain-grid">
+                <div class="input-group">
+                    <label for="hoursSinceRain" data-key="hours_since_rain_label">Hours Since Last Rain:</label>
+                    <input type="number" id="hoursSinceRain" data-key="hours_since_rain_placeholder" placeholder="Hours">
+                </div>
+                <div class="input-group">
+                    <label for="rainAmount" data-key="rain_amount_label">Last Rain Amount:</label>
+                    <select id="rainAmount">
+                        <option value="none" data-key="rain_none">No rain recently</option>
+                        <option value="light" data-key="rain_light">Light (<5mm)</option>
+                        <option value="moderate" data-key="rain_moderate">Moderate (5-10mm)</option>
+                        <option value="heavy" data-key="rain_heavy">Heavy (>10mm)</option>
+                    </select>
+                </div>
+            </div>
+            <div class="input-group">
+                <label for="dryDays" data-key="dry_days_label">Days Without Rain:</label>
+                <select id="dryDays">
+                    <option value="0" data-key="dry_days_0">Today</option>
+                    <option value="1" data-key="dry_days_1">1 day</option>
+                    <option value="2" data-key="dry_days_2">2 days</option>
+                    <option value="3" data-key="dry_days_3">3 days</option>
+                    <option value="4" data-key="dry_days_4">4+ days</option>
+                </select>
+            </div>
+        </div>
+        
+        <div class="section">
+            <div class="section-title" data-key="health_status">Personal Health Status</div>
+            <div class="checkbox-group" onclick="toggleCheckbox('inhalerUsed')">
+                <input type="checkbox" id="inhalerUsed">
+                <label for="inhalerUsed" data-key="inhaler_used">Used rescue inhaler in last 24h</label>
+            </div>
+            <div class="checkbox-group" onclick="toggleCheckbox('wheezing')">
+                <input type="checkbox" id="wheezing">
+                <label for="wheezing" data-key="wheezing">Wheezing or chest tightness</label>
+            </div>
+            <div class="checkbox-group" onclick="toggleCheckbox('eyeItching')">
+                <input type="checkbox" id="eyeItching">
+                <label for="eyeItching" data-key="eye_itching">Eye itching (30+ minutes)</label>
+            </div>
+            <div class="checkbox-group" onclick="toggleCheckbox('runnyNose')">
+                <input type="checkbox" id="runnyNose">
+                <label for="runnyNose" data-key="runny_nose">Runny nose (tissues hourly)</label>
+            </div>
+            <div class="checkbox-group" onclick="toggleCheckbox('throatScratch')">
+                <input type="checkbox" id="throatScratch">
+                <label for="throatScratch" data-key="throat_scratch">Throat scratching sensation</label>
+            </div>
+            <div class="checkbox-group" onclick="toggleCheckbox('coughing')">
+                <input type="checkbox" id="coughing">
+                <label for="coughing" data-key="coughing">Coughing (not from talking)</label>
+            </div>
+        </div>
+        
+        <button class="calculate-btn breath-animation" onclick="calculateDecision()">
+            <span data-key="calculate_button">✿ Calculate Risk Level ✿</span>
+        </button>
+        
+        <div id="result"></div>
+    </div>
+
+    <script src="assets/js/script.js"></script>
+</body>
+</html>
